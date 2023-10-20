@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php 
+session_start();
+session_destroy();
+header("location: login.php");
+exit;
+?>
+
+<DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
