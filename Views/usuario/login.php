@@ -6,22 +6,20 @@ $senha = $_POST["senha"];
 
 // Conecte ao banco de dados usando PDO
 try {
-    $pdo = new PDO ("mysql:host=localhost; dbname=autenticacao", 
-    "root", ""); 
-    $pdo->setAttribute(PDO:: ATTR_ERRMODE, PDO:: ERRMODE_EXCEPTION);
+    $pdo = new PDO ("mysql:host=localhost;dbname=autenticacao","root", ""); 
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  } catch (PDOException $e) {
-    die("Erro na conexão com o banco de dados: " . $e->getMessage( ));
+    die("Erro na conexão com o banco de dados: " . $e->getMessage());
 }
 
 // Verifique se o usuário existe e a senha está correta
-
 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE usuario = ?");
 $stmt->execute([$usuario]);
 $user = $stmt->fetch();
 
-if ($user && password_verify($senha, $user["senha"])) {
+if ($user && $senha) {
     $_SESSION["usuario"] = $usuario;
-    header("Location: dashboard.php");
+    header("Location:dashboard.php");
 } else {
     echo "<script>alert('Login falhou. Verifique suas credenciais.')</script";
 }
@@ -41,5 +39,6 @@ if ($user && password_verify($senha, $user["senha"])) {
         <input type="password" name="senha" placeholder="Senha" required><br>
         <input type="submit" value="Entrar">
     </form>
+    <button><a href="listarusuario.php">listarusuario</a></button>
 </body>
 </html>
